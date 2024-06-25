@@ -1,7 +1,5 @@
 package gr.aueb.cf.mobilecontacts.model;
 
-import java.util.Objects;
-
 public class MobileContact extends AbstractEntity implements IdentifiableEntity {
     private UserDetails userDetails;
     private String phoneNumber;
@@ -10,23 +8,21 @@ public class MobileContact extends AbstractEntity implements IdentifiableEntity 
 
     }
 
-    public MobileContact(UserDetails userDetails, String phoneNumber) {
-        this.userDetails = new UserDetails(userDetails);
+    public MobileContact(long id, UserDetails userDetails, String phoneNumber) {
+        this.setId(id);
+        this.userDetails = new UserDetails(userDetails) ;
         this.phoneNumber = phoneNumber;
     }
 
     public UserDetails getUserDetails() {
         return new UserDetails(userDetails);
     }
-
     public void setUserDetails(UserDetails userDetails) {
         this.userDetails = new UserDetails(userDetails);
     }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
-
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -34,6 +30,7 @@ public class MobileContact extends AbstractEntity implements IdentifiableEntity 
     @Override
     public String toString() {
         return "MobileContact{" +
+                "id" + getId() +
                 "userDetails=" + userDetails +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
@@ -45,13 +42,16 @@ public class MobileContact extends AbstractEntity implements IdentifiableEntity 
         if (o == null || getClass() != o.getClass()) return false;
 
         MobileContact that = (MobileContact) o;
-        return Objects.equals(getUserDetails(), that.getUserDetails()) && Objects.equals(getPhoneNumber(), that.getPhoneNumber());
+
+        if (getUserDetails() != null ? !getUserDetails().equals(that.getUserDetails()) : that.getUserDetails() != null)
+            return false;
+        return getPhoneNumber() != null ? getPhoneNumber().equals(that.getPhoneNumber()) : that.getPhoneNumber() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hashCode(getUserDetails());
-        result = 31 * result + Objects.hashCode(getPhoneNumber());
+        int result = getUserDetails() != null ? getUserDetails().hashCode() : 0;
+        result = 31 * result + (getPhoneNumber() != null ? getPhoneNumber().hashCode() : 0);
         return result;
     }
 }

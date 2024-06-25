@@ -1,7 +1,5 @@
 package gr.aueb.cf.mobilecontacts.model;
 
-import java.util.Objects;
-
 public class UserDetails extends AbstractEntity implements IdentifiableEntity {
     private String firstname;
     private String lastname;
@@ -11,12 +9,13 @@ public class UserDetails extends AbstractEntity implements IdentifiableEntity {
     }
 
     public UserDetails(long id, String firstname, String lastname) {
-        setId(id);
+        this.setId(id);
         this.firstname = firstname;
         this.lastname = lastname;
     }
 
     public UserDetails(UserDetails userDetails) {
+        setId(userDetails.getId());
         this.firstname = userDetails.getFirstname();
         this.lastname = userDetails.getLastname();
     }
@@ -24,15 +23,12 @@ public class UserDetails extends AbstractEntity implements IdentifiableEntity {
     public String getFirstname() {
         return firstname;
     }
-
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
-
     public String getLastname() {
         return lastname;
     }
-
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
@@ -40,6 +36,7 @@ public class UserDetails extends AbstractEntity implements IdentifiableEntity {
     @Override
     public String toString() {
         return "UserDetails{" +
+                "id=" + getId() +
                 "firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 '}';
@@ -51,13 +48,16 @@ public class UserDetails extends AbstractEntity implements IdentifiableEntity {
         if (o == null || getClass() != o.getClass()) return false;
 
         UserDetails that = (UserDetails) o;
-        return Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname);
+
+        if (getFirstname() != null ? !getFirstname().equals(that.getFirstname()) : that.getFirstname() != null)
+            return false;
+        return getLastname() != null ? getLastname().equals(that.getLastname()) : that.getLastname() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hashCode(firstname);
-        result = 31 * result + Objects.hashCode(lastname);
+        int result = getFirstname() != null ? getFirstname().hashCode() : 0;
+        result = 31 * result + (getLastname() != null ? getLastname().hashCode() : 0);
         return result;
     }
 }
