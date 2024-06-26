@@ -1,6 +1,5 @@
 package gr.aueb.cf.mobilecontacts.service;
 
-import gr.aueb.cf.mobilecontacts.IMobileContactService;
 import gr.aueb.cf.mobilecontacts.dao.IMobileContactDAO;
 import gr.aueb.cf.mobilecontacts.dto.MobileContactInsertDTO;
 import gr.aueb.cf.mobilecontacts.dto.MobileContactUpdateDTO;
